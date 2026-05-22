@@ -15,11 +15,11 @@ const STARTER_CHIPS = [
   'Team burnout',
 ];
 
-const callHR = async (messages) => {
+const callHR = async (messages, moduleKey) => {
   const res = await fetch('/api/chat', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ messages }),
+    body: JSON.stringify({ messages, module: moduleKey }),
   });
   if (!res.ok) throw new Error('API error');
   const data = await res.json();
@@ -55,7 +55,7 @@ export default function Chat() {
     setIsTyping(true);
 
     try {
-      const rawReply = await callHR(newHistory);
+      const rawReply = await callHR(newHistory, activeModule.key);
       setConversationHistory(prev => [...prev, { role: 'assistant', content: rawReply }]);
       setMessages(prev => [...prev, { role: 'assistant', content: rawReply }]);
     } catch {

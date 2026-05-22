@@ -81,11 +81,11 @@ export default function QuickToolModal({ toolKey, onClose }) {
       const res = await fetch('/api/chat', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ toolPrompt }),
+        body: JSON.stringify({ toolPrompt, module: toolKey }),
       });
       const data = await res.json();
       // Strip suggestion comment if present
-      const cleaned = (data.reply || '').replace(/<!--SUGGESTIONS:\[.*?\]-->/s, '').trim();
+      const cleaned = (data.reply || '').replace(/<!--SUGGEST(?:ION|ATION)S?:\[.*?\]-->/is, '').trim();
       setOutput(cleaned);
     } catch {
       setOutput('Something went wrong. Please try again.');

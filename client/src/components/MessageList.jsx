@@ -82,11 +82,11 @@ function parseInline(text) {
 
 function parseSuggestions(raw) {
   if (!raw) return { text: '', suggestions: [] };
-  const match = raw.match(/<!--SUGGESTIONS:(\[.*?\])-->/s);
+  const match = raw.match(/<!--SUGGEST(?:ION|ATION)S?:(\[.*?\])-->/is);
   if (!match) return { text: raw, suggestions: [] };
   try {
     const suggestions = JSON.parse(match[1]);
-    const text = raw.replace(/<!--SUGGESTIONS:\[.*?\]-->/s, '').trim();
+    const text = raw.replace(/<!--SUGGEST(?:ION|ATION)S?:\[.*?\]-->/is, '').trim();
     return { text, suggestions };
   } catch {
     return { text: raw, suggestions: [] };
