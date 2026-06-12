@@ -3,7 +3,8 @@
   "buildCommand": "cd client && npm install && npm run build",
   "outputDirectory": "client/dist",
   "rewrites": [
-    { "source": "/api/:path*", "destination": "/api/chat" },
+    { "source": "/api/lark", "destination": "/api/lark" },
+    { "source": "/api/chat", "destination": "/api/chat" },
     { "source": "/(.*)", "destination": "/index.html" }
   ]
 }
