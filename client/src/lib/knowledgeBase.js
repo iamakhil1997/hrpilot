@@ -47,6 +47,34 @@ export async function addKnowledgeFiles(files) {
   return next;
 }
 
+export async function addIndiaHRStarterPack() {
+  const id = 'hrpilot-india-hr-starter-pack-v1';
+  const response = await fetch('/knowledge/india-hr-starter-pack.md');
+  if (!response.ok) throw new Error('The India HR starter pack could not be downloaded. Please try again later.');
+
+  const text = cleanText(await response.text());
+  if (!text) throw new Error('The India HR starter pack is empty.');
+
+  const documents = loadKnowledgeDocuments();
+  const document = {
+    id,
+    name: 'India HR starter pack — official sources (reviewed 23 Oct 2026).md',
+    text,
+    addedAt: Date.now(),
+  };
+  const next = documents.some(item => item.id === id)
+    ? documents.map(item => item.id === id ? document : item)
+    : [...documents, document];
+
+  if (next.length > MAX_FILES) throw new Error(`Keep up to ${MAX_FILES} documents in your knowledge base.`);
+  if (next.reduce((sum, item) => sum + item.text.length, 0) > MAX_TOTAL_CHARS) {
+    throw new Error('The knowledge base has reached its 2 MB text limit. Remove a document before adding more.');
+  }
+
+  saveDocuments(next);
+  return next;
+}
+
 export function removeKnowledgeDocument(id) {
   const next = loadKnowledgeDocuments().filter(doc => doc.id !== id);
   saveDocuments(next);
