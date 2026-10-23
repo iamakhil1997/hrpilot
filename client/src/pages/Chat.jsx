@@ -21,8 +21,8 @@ const callHR = async (messages, moduleKey) => {
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ messages, module: moduleKey }),
   });
-  if (!res.ok) throw new Error('API error');
-  const data = await res.json();
+  const data = await res.json().catch(() => ({}));
+  if (!res.ok) throw new Error(data.error || 'HRPilot could not reach its AI service. Please try again in a moment.');
   return data.reply;
 };
 
@@ -58,8 +58,8 @@ export default function Chat() {
       const rawReply = await callHR(newHistory, activeModule.key);
       setConversationHistory(prev => [...prev, { role: 'assistant', content: rawReply }]);
       setMessages(prev => [...prev, { role: 'assistant', content: rawReply }]);
-    } catch {
-      const errMsg = { role: 'assistant', content: "Hit a snag — give it another shot." };
+    } catch (error) {
+      const errMsg = { role: 'assistant', content: error.message || "Hit a snag — give it another shot." };
       setMessages(prev => [...prev, errMsg]);
     } finally {
       setIsTyping(false);
@@ -104,7 +104,7 @@ export default function Chat() {
             </div>
             <div>
               <div style={{ fontSize: 14, fontWeight: 500 }}>{activeModule.label}</div>
-              <div style={{ fontSize: 11, color: 'var(--text3)' }}>Ask anything — treated with full confidentiality</div>
+              <div style={{ fontSize: 11, color: 'var(--text3)' }}>Messages go to Groq. Avoid employee names and identifiers.</div>
             </div>
           </div>
           <button
