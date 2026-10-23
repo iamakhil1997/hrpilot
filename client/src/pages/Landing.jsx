@@ -1,4 +1,4 @@
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 export default function Landing() {
   const navigate = useNavigate();
@@ -28,6 +28,7 @@ export default function Landing() {
           <a href="#features">Features</a>
           <a href="#modules">Modules</a>
           <a href="#howitworks">About</a>
+          <Link to="/contact" style={{ color: 'var(--text2)', textDecoration: 'none' }}>Contact</Link>
         </div>
 
         {/* CTA */}
@@ -371,7 +372,7 @@ export default function Landing() {
         <div style={{ display: 'flex', gap: 20 }}>
           <a href="#" style={{ color: 'var(--text3)' }}>Privacy</a>
           <a href="#" style={{ color: 'var(--text3)' }}>Terms</a>
-          <a href="#" style={{ color: 'var(--text3)' }}>Contact</a>
+          <Link to="/contact" style={{ color: 'var(--text3)', textDecoration: 'none' }}>Contact developer</Link>
         </div>
         <span>© 2025 HRPilot · Built by Akhil P Kumar · Kochi, Kerala</span>
       </footer>
