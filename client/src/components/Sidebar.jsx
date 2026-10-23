@@ -115,6 +115,15 @@ export default function Sidebar({ activeModule, setActiveModule, setActiveModal 
           <span style={{ fontSize: 11, color: 'var(--green)' }}>Free to use · No limits</span>
         </div>
         <div style={{ fontSize: 11, color: 'var(--text3)' }}>Only HR questions handled here.</div>
+        <button
+          onClick={() => navigate('/contact')}
+          style={{
+            marginTop: 10, padding: 0, background: 'transparent', border: 'none',
+            color: 'var(--indigo2)', fontSize: 11, cursor: 'pointer', textAlign: 'left',
+          }}
+        >
+          Contact developer
+        </button>
       </div>
     </div>
   );
