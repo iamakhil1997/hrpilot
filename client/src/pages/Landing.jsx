@@ -80,8 +80,8 @@ export default function Landing() {
           lineHeight: 1.1, marginBottom: 20, position: 'relative', zIndex: 1,
           maxWidth: 680,
         }}>
-          Your HR Department,<br />
-          Powered by <span style={{ color: 'var(--indigo2)' }}>AI</span>
+          HR work,<br />
+          supported by <span style={{ color: 'var(--indigo2)' }}>AI</span>
         </h1>
 
         {/* Sub-text */}
@@ -90,7 +90,7 @@ export default function Landing() {
           maxWidth: 520, lineHeight: 1.65, marginBottom: 36,
           position: 'relative', zIndex: 1,
         }}>
-          The smart HR assistant that handles policies, performance, compliance, hiring, and employee relations — the way a real HR professional would.
+          An AI assistant for HR questions and first-draft documents, with clear limits for sensitive employee decisions.
         </p>
 
         {/* CTA buttons */}
@@ -200,22 +200,26 @@ export default function Landing() {
       <section id="features" style={{ background: 'var(--bg2)', padding: '80px 40px' }}>
         <div style={{ maxWidth: 1000, margin: '0 auto', textAlign: 'center' }}>
           <div style={{ fontSize: 11, color: 'var(--indigo2)', letterSpacing: 2, textTransform: 'uppercase', marginBottom: 12 }}>WHAT HRPILOT DOES</div>
-          <h2 style={{ fontSize: 38, fontWeight: 500, marginBottom: 14 }}>Everything HR, handled intelligently</h2>
+          <h2 style={{ fontSize: 38, fontWeight: 500, marginBottom: 14 }}>Practical support across HR</h2>
           <p style={{ fontSize: 15, color: 'var(--text2)', fontWeight: 300, maxWidth: 580, margin: '0 auto 48px' }}>
-            From a routine policy question to a complex termination — HRPilot thinks it through the way an experienced HR professional would.
+            Get practical starting points for everyday HR work. Sensitive employee decisions need review by a qualified human.
           </p>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 16 }} className="features-grid">
             {[
               { icon: 'ti-brain', title: 'Understands context', desc: 'Reads why you\'re asking, not just what you asked. Gives advice that fits your actual situation.' },
-              { icon: 'ti-shield-check', title: 'Indian labour law native', desc: 'PF, ESI, Gratuity, Shops Act, POSH, Maternity Benefit — built in, not bolted on. State-specific rules included.' },
-              { icon: 'ti-file-text', title: 'Document generation', desc: 'Warning letters, PIPs, JDs, offer letters, policies — ready-to-use drafts in seconds.' },
-              { icon: 'ti-messages', title: 'Conversational memory', desc: 'Remembers your full conversation. Ask follow-ups, refine answers, go deeper — just like talking to a real person.' },
+              { icon: 'ti-shield-check', title: 'India-focused HR guidance', desc: 'General HR guidance on common Indian workplace topics. Rules vary by location and change; verify current law before acting.' },
+              { icon: 'ti-file-text', title: 'Document drafts', desc: 'Create first drafts of HR letters, plans, job descriptions, and policies. Review with qualified HR or legal support before use.' },
+              { icon: 'ti-messages', title: 'Context within this chat', desc: 'HRPilot uses earlier messages in the current chat to answer follow-ups. Reset the chat to clear that context.' },
               { icon: 'ti-bulb', title: 'Smart follow-up suggestions', desc: 'After every answer, HRPilot suggests the questions you\'d naturally want to ask next. Click to send or edit freely.' },
-              { icon: 'ti-lock', title: 'Fully confidential', desc: 'Your conversations are private. No data stored, no sharing. Built for sensitive HR situations.' },
+              { icon: 'ti-lock', title: 'Privacy-aware by design', desc: 'Chat history is held in this page and is not saved to an HRPilot account. Messages are sent to our AI provider; avoid names and employee identifiers.' },
             ].map(f => (
               <FeatureCard key={f.title} {...f} />
             ))}
           </div>
+          <p style={{ fontSize: 12.5, color: 'var(--text3)', lineHeight: 1.7, maxWidth: 760, margin: '22px auto 0' }}>
+            This page keeps chat history in browser memory and does not save it to an HRPilot account. Messages are sent to Groq to generate replies. Groq says inference requests are not retained by default, but inputs and outputs may be temporarily logged for reliability or abuse review for up to 30 days. HRPilot has not verified its account-level retention settings. Avoid names and identifiable employee details.{' '}
+            <a href="https://console.groq.com/docs/your-data" target="_blank" rel="noreferrer" style={{ color: 'var(--indigo2)' }}>Groq data handling</a>
+          </p>
         </div>
       </section>
 
@@ -225,12 +229,12 @@ export default function Landing() {
           <div style={{ fontSize: 11, color: 'var(--indigo2)', letterSpacing: 2, textTransform: 'uppercase', marginBottom: 12 }}>HOW IT WORKS</div>
           <h2 style={{ fontSize: 38, fontWeight: 500, marginBottom: 14 }}>Simple as having a conversation</h2>
           <p style={{ fontSize: 15, color: 'var(--text2)', fontWeight: 300, marginBottom: 60 }}>
-            No setup. Just ask your HR question and get a real, actionable answer.
+            No setup. Ask a question and get a practical starting point. Verify consequential guidance before acting.
           </p>
           <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'center', gap: 0, position: 'relative' }} className="steps-row">
             {[
               { num: '01', title: 'Ask your question', desc: 'Type any HR situation — a policy question, a difficult employee, a compliance concern, a document you need.' },
-              { num: '02', title: 'Get expert advice', desc: 'HRPilot reads the full context and responds like an experienced HR person — direct, practical, clear.' },
+              { num: '02', title: 'Get a practical response', desc: 'HRPilot uses the chat context to offer a clear starting point and notes when more information or human review is needed.' },
               { num: '03', title: 'Go deeper or act', desc: 'Use smart follow-up suggestions, generate a document, or refine the advice until you\'re ready to act.' },
             ].map((s, i) => (
               <div key={s.num} style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 20, position: 'relative' }}>
@@ -264,7 +268,7 @@ export default function Landing() {
       <section id="modules" style={{ background: 'var(--bg2)', padding: '80px 40px', textAlign: 'center' }}>
         <div style={{ maxWidth: 820, margin: '0 auto' }}>
           <div style={{ fontSize: 11, color: 'var(--indigo2)', letterSpacing: 2, textTransform: 'uppercase', marginBottom: 12 }}>SPECIALIST MODULES</div>
-          <h2 style={{ fontSize: 38, fontWeight: 500, marginBottom: 14 }}>Every HR function covered</h2>
+          <h2 style={{ fontSize: 38, fontWeight: 500, marginBottom: 14 }}>Tools for common HR workflows</h2>
           <p style={{ fontSize: 15, color: 'var(--text2)', fontWeight: 300, marginBottom: 40 }}>
             Switch between modules for context-aware advice in each area of HR.
           </p>
