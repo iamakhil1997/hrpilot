@@ -17,7 +17,7 @@ const QUICK_TOOLS = [
   { key: 'exit',       icon: 'ti-door-exit',        label: 'Exit Interview' },
 ];
 
-export default function Sidebar({ activeModule, setActiveModule, setActiveModal }) {
+export default function Sidebar({ activeModule, setActiveModule, setActiveModal, knowledgeCount = 0, onOpenKnowledge }) {
   const navigate = useNavigate();
 
   return (
@@ -106,6 +106,19 @@ export default function Sidebar({ activeModule, setActiveModule, setActiveModal 
             <span>{t.label}</span>
           </button>
         ))}
+
+        <button
+          onClick={onOpenKnowledge}
+          style={{
+            width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 7,
+            padding: '9px 10px', borderRadius: 10, marginTop: 8,
+            background: 'var(--bg4)', border: '1px solid var(--border)', cursor: 'pointer',
+            textAlign: 'left', color: 'var(--text2)', fontSize: 12,
+          }}
+        >
+          <span style={{ display: 'flex', alignItems: 'center', gap: 7 }}><i className="ti ti-book-2" style={{ fontSize: 14 }} /> Company knowledge</span>
+          <span style={{ color: 'var(--indigo2)', fontSize: 11 }}>{knowledgeCount}</span>
+        </button>
       </div>
 
       {/* Footer */}

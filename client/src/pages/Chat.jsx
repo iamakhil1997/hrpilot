@@ -3,6 +3,8 @@ import Sidebar, { MODULES } from '../components/Sidebar';
 import MessageList from '../components/MessageList';
 import InputBar from '../components/InputBar';
 import QuickToolModal from '../components/QuickToolModal';
+import KnowledgeBaseModal from '../components/KnowledgeBaseModal';
+import { addKnowledgeFiles, clearKnowledgeDocuments, loadKnowledgeDocuments, removeKnowledgeDocument, retrieveKnowledge } from '../lib/knowledgeBase';
 
 const WELCOME =
   "Hey, what's going on? I'm here for anything HR — policies, performance, hiring, payroll, conflicts, compliance — whatever you need to work through. What's on your mind?";
@@ -15,11 +17,11 @@ const STARTER_CHIPS = [
   'Team burnout',
 ];
 
-const callHR = async (messages, moduleKey) => {
+const callHR = async (messages, moduleKey, knowledgeContext) => {
   const res = await fetch('/api/chat', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ messages, module: moduleKey }),
+    body: JSON.stringify({ messages, module: moduleKey, knowledgeContext }),
   });
   const data = await res.json().catch(() => ({}));
   if (!res.ok) throw new Error(data.error || 'HRPilot could not reach its AI service. Please try again in a moment.');
@@ -33,6 +35,8 @@ export default function Chat() {
   const [isTyping, setIsTyping] = useState(false);
   const [showChips, setShowChips] = useState(true);
   const [activeModal, setActiveModal] = useState(null);
+  const [knowledgeDocuments, setKnowledgeDocuments] = useState(loadKnowledgeDocuments);
+  const [showKnowledge, setShowKnowledge] = useState(false);
 
   // When module changes, reset chat
   const setActiveModule = (mod) => {
@@ -55,7 +59,9 @@ export default function Chat() {
     setIsTyping(true);
 
     try {
-      const rawReply = await callHR(newHistory, activeModule.key);
+      const retrievalQuery = newHistory.filter(message => message.role === 'user').slice(-3).map(message => message.content).join(' ');
+      const knowledgeContext = retrieveKnowledge(retrievalQuery, knowledgeDocuments);
+      const rawReply = await callHR(newHistory, activeModule.key, knowledgeContext);
       setConversationHistory(prev => [...prev, { role: 'assistant', content: rawReply }]);
       setMessages(prev => [...prev, { role: 'assistant', content: rawReply }]);
     } catch (error) {
@@ -82,6 +88,8 @@ export default function Chat() {
         activeModule={activeModule}
         setActiveModule={setActiveModule}
         setActiveModal={setActiveModal}
+        knowledgeCount={knowledgeDocuments.length}
+        onOpenKnowledge={() => setShowKnowledge(true)}
       />
 
       {/* Main chat area */}
@@ -104,7 +112,9 @@ export default function Chat() {
             </div>
             <div>
               <div style={{ fontSize: 14, fontWeight: 500 }}>{activeModule.label}</div>
-              <div style={{ fontSize: 11, color: 'var(--text3)' }}>Messages go to Groq. Avoid employee names and identifiers.</div>
+              <div style={{ fontSize: 11, color: 'var(--text3)' }}>
+                {knowledgeDocuments.length ? `${knowledgeDocuments.length} company source${knowledgeDocuments.length === 1 ? '' : 's'} · matching excerpts go to Groq` : 'Messages go to Groq · avoid employee names and identifiers'}
+              </div>
             </div>
           </div>
           <button
@@ -166,6 +176,16 @@ export default function Chat() {
       {/* Quick tool modal */}
       {activeModal && (
         <QuickToolModal toolKey={activeModal} onClose={() => setActiveModal(null)} />
+      )}
+
+      {showKnowledge && (
+        <KnowledgeBaseModal
+          documents={knowledgeDocuments}
+          onAdd={async files => setKnowledgeDocuments(await addKnowledgeFiles(files))}
+          onRemove={id => setKnowledgeDocuments(removeKnowledgeDocument(id))}
+          onClear={() => setKnowledgeDocuments(clearKnowledgeDocuments())}
+          onClose={() => setShowKnowledge(false)}
+        />
       )}
     </div>
   );

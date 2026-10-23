@@ -211,14 +211,15 @@ export default function Landing() {
               { icon: 'ti-shield-check', title: 'India-focused HR guidance', desc: 'General HR guidance on common Indian workplace topics. Rules vary by location and change; verify current law before acting.' },
               { icon: 'ti-file-text', title: 'Document drafts', desc: 'Create first drafts of HR letters, plans, job descriptions, and policies. Review with qualified HR or legal support before use.' },
               { icon: 'ti-messages', title: 'Context within this chat', desc: 'HRPilot uses earlier messages in the current chat to answer follow-ups. Reset the chat to clear that context.' },
+              { icon: 'ti-book-2', title: 'Your HR knowledge', desc: 'Add handbooks and company policies. HRPilot retrieves relevant passages and names the source in its answer.' },
               { icon: 'ti-bulb', title: 'Smart follow-up suggestions', desc: 'After every answer, HRPilot suggests the questions you\'d naturally want to ask next. Click to send or edit freely.' },
-              { icon: 'ti-lock', title: 'Privacy-aware by design', desc: 'Chat history is held in this page and is not saved to an HRPilot account. Messages are sent to our AI provider; avoid names and employee identifiers.' },
+              { icon: 'ti-lock', title: 'Local document storage', desc: 'Knowledge files stay in this browser. Matching excerpts are sent to Groq with your question. Do not upload personal or sensitive employee data.' },
             ].map(f => (
               <FeatureCard key={f.title} {...f} />
             ))}
           </div>
           <p style={{ fontSize: 12.5, color: 'var(--text3)', lineHeight: 1.7, maxWidth: 760, margin: '22px auto 0' }}>
-            This page keeps chat history in browser memory and does not save it to an HRPilot account. Messages are sent to Groq to generate replies. Groq says inference requests are not retained by default, but inputs and outputs may be temporarily logged for reliability or abuse review for up to 30 days. HRPilot has not verified its account-level retention settings. Avoid names and identifiable employee details.{' '}
+            Chat history stays in browser memory; company documents are stored in this browser on this device. For each question, matching document excerpts and the conversation are sent to Groq to generate a reply. Groq says inference requests are not retained by default, but inputs and outputs may be temporarily logged for reliability or abuse review for up to 30 days. HRPilot has not verified its account-level retention settings. Do not upload employee names, identifiers, payroll, health, or complaint records.{' '}
             <a href="https://console.groq.com/docs/your-data" target="_blank" rel="noreferrer" style={{ color: 'var(--indigo2)' }}>Groq data handling</a>
           </p>
         </div>
