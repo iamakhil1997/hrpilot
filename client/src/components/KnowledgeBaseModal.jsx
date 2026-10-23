@@ -1,6 +1,6 @@
 import { useRef, useState } from 'react';
 
-export default function KnowledgeBaseModal({ documents, onAdd, onRemove, onClear, onClose }) {
+export default function KnowledgeBaseModal({ documents, onAdd, onAddStarter, onRemove, onClear, onClose }) {
   const inputRef = useRef(null);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState('');
@@ -15,6 +15,18 @@ export default function KnowledgeBaseModal({ documents, onAdd, onRemove, onClear
       await onAdd(files);
     } catch (err) {
       setError(err.message || 'Could not add those files.');
+    } finally {
+      setBusy(false);
+    }
+  };
+
+  const handleStarterPack = async () => {
+    setBusy(true);
+    setError('');
+    try {
+      await onAddStarter();
+    } catch (err) {
+      setError(err.message || 'Could not add the India HR starter pack.');
     } finally {
       setBusy(false);
     }
@@ -35,8 +47,13 @@ export default function KnowledgeBaseModal({ documents, onAdd, onRemove, onClear
           Add your handbook, leave rules, benefits guide, or process documents. HRPilot will search these files for relevant passages when you ask a question.
         </p>
 
+        <button onClick={handleStarterPack} disabled={busy} style={{ border: '1px solid var(--pill-bdr)', borderRadius: 10, padding: '11px 14px', background: 'var(--indigo-dim)', color: 'var(--indigo2)', fontSize: 13, fontWeight: 500, cursor: busy ? 'wait' : 'pointer' }}>
+          {busy ? 'Adding starter pack…' : '＋ Add India HR official-source starter pack'}
+        </button>
+        <p style={{ color: 'var(--text3)', fontSize: 11, lineHeight: 1.5, marginTop: -10 }}>Includes dated references for central labour codes, POSH confidentiality, and DPDP commencement. Not legal advice; State and sector rules may apply.</p>
+
         <div style={{ padding: 12, borderRadius: 10, background: 'rgba(245,158,11,.08)', border: '1px solid rgba(245,158,11,.2)', color: '#fcdba0', fontSize: 12, lineHeight: 1.6 }}>
-          Files stay in this browser on this device. When you ask something, matching passages are sent to Groq with your question to create an answer. Do not upload employee names, payroll details, health information, complaint records, or other sensitive personal data. This is a shared public app without company accounts or access controls.
+          Files stay in this browser on this device. Your conversation and matching passages are sent to Groq when you ask something. Do not upload employee names, payroll details, health information, grievance or POSH records, or other sensitive personal data. This is a shared public app without company accounts or access controls.
         </div>
 
         <input ref={inputRef} type="file" accept=".txt,.md,.csv,.json,text/plain,text/markdown,text/csv,application/json" multiple onChange={handleFiles} style={{ display: 'none' }} />

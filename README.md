@@ -2,7 +2,7 @@
 
 AI assistant for Indian SME HR questions and first-draft documents. It can retrieve relevant passages from company documents uploaded by the user. It is not connected to a maintained legal-source library and must not make employee decisions.
 
-**Live:** [hrpilot.vercel.app](https://hrpilot.vercel.app) · **Free** · **No signup**
+**Live:** [hrpilot.vercel.app](https://hrpilot.vercel.app) · **Free demo** · **No signup**
 
 ---
 
@@ -41,6 +41,8 @@ npm run dev
 In the chat sidebar, open **Company knowledge** to add `.txt`, `.md`, `.csv`, or `.json` files (up to 20 files, 1 MB each). HRPilot splits the text into passages, searches them locally for relevant terms, and sends only matching passages with the question to Groq. Responses are instructed to identify those file sources and to distinguish company policy from legal requirements.
 
 Files are stored in browser local storage on that device and are not shared across users or devices. This public app has no sign-in, company workspaces, role-based access controls, central document store, or employee-data protections. Do not upload employee names, payroll records, health information, complaints, or other sensitive personal data. For PDFs or Word files, copy non-sensitive policy text into a supported format first.
+
+The Company knowledge dialog also offers a one-click **India HR official-source starter pack**. It is a dated reference pack (reviewed 23 October 2026), not a continuously maintained legal database. Check current Central and State sources and obtain qualified review before acting.
 
 This is retrieval-augmented generation (RAG), not model training: uploaded files ground answers about your company but do not permanently change the underlying language model. HRPilot still has no maintained, verified current-law source library; check current rules with official sources or a qualified professional.
 

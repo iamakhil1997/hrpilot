@@ -4,7 +4,7 @@ import MessageList from '../components/MessageList';
 import InputBar from '../components/InputBar';
 import QuickToolModal from '../components/QuickToolModal';
 import KnowledgeBaseModal from '../components/KnowledgeBaseModal';
-import { addKnowledgeFiles, clearKnowledgeDocuments, loadKnowledgeDocuments, removeKnowledgeDocument, retrieveKnowledge } from '../lib/knowledgeBase';
+import { addIndiaHRStarterPack, addKnowledgeFiles, clearKnowledgeDocuments, loadKnowledgeDocuments, removeKnowledgeDocument, retrieveKnowledge } from '../lib/knowledgeBase';
 
 const WELCOME =
   "Hey, what's going on? I'm here for anything HR — policies, performance, hiring, payroll, conflicts, compliance — whatever you need to work through. What's on your mind?";
@@ -182,6 +182,7 @@ export default function Chat() {
         <KnowledgeBaseModal
           documents={knowledgeDocuments}
           onAdd={async files => setKnowledgeDocuments(await addKnowledgeFiles(files))}
+          onAddStarter={async () => setKnowledgeDocuments(await addIndiaHRStarterPack())}
           onRemove={id => setKnowledgeDocuments(removeKnowledgeDocument(id))}
           onClear={() => setKnowledgeDocuments(clearKnowledgeDocuments())}
           onClose={() => setShowKnowledge(false)}
